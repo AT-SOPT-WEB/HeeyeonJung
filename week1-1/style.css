@@ -1,0 +1,45 @@
+header{
+    padding: 20px 0;
+    background-color: bisque;
+}
+
+h1, h3{
+    text-align: center;
+    font-weight: bold;
+}
+
+h2{
+    font-weight: bold;
+}
+
+p{
+    font-weight: 700;
+}
+
+footer{
+    padding: 8px 0;
+    background-color: bisque;
+}
+
+div{
+    display: flex;
+    gap: 20px;
+}
+
+nav, aside{
+    background-color: #F8F4E1;
+    border-radius: 5px;
+    padding: 18px;;
+}
+
+nav{
+    flex: 2;
+}
+
+aside{
+    flex: 1;
+}
+
+li{
+    font-size: large;
+}
