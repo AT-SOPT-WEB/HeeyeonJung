@@ -1,0 +1,33 @@
+div{
+    text-align: center;
+}
+
+body{
+    padding-top: 5px;
+    justify-content: center;
+}
+
+h1{
+    color: green;
+    background-color: bisque;
+}
+
+h2{
+   text-decoration: underline;
+}
+
+ol{
+    color: blueviolet;
+    font-weight: bold;
+}
+
+p{
+    font-style: italic;
+}
+
+button {
+	background-color: yellowgreen;
+	cursor: pointer;
+    padding: 5px;
+    border: none;
+}
