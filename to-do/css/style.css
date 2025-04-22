@@ -1,0 +1,165 @@
+main {
+    max-width: 65%;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.title-section h1 {
+    background-color: var(--color-top);
+    padding: 1rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 2.3rem;
+    border-radius: 0.5rem;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.filter-buttons button,
+#add-btn,
+#delete-btn,
+#complete-btn {
+    background-color: var(--color-button);
+    padding: 0.6rem;
+    border-radius: 0.6rem;
+    width: 4.5rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    position: absolute;
+    margin-top: 0.8rem;
+    left: 0;
+    display: none;
+    flex-direction: column;
+    background-color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    border-radius: 0.3rem;
+    padding: 0.5rem 2rem;
+}
+
+.dropdown:hover .dropdown-content {
+    display: flex;
+}
+
+#content-contain {
+    background-color: var(--color-bg);
+    padding: 5rem 3rem;
+    margin-bottom: 4.6rem;
+    border-radius: 1rem;
+}
+
+.input-section {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#input-filed {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+}
+
+#input-filed:focus {
+    outline: none;
+  }
+
+.custom-select {
+    position: relative;
+}
+
+.select-btn {
+    padding: 0.5rem;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.select-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    margin-top: 0.3rem;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    z-index: 4;
+    left: 0;
+    display: none;
+    flex-direction: column;
+    padding: 0.5rem 2.5rem;
+}
+
+.custom-select:hover .select-dropdown {
+    display: block;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0.5rem;
+    justify-content: flex-end;
+}
+
+/* 테이블 스타일 */
+.todo-table table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.todo-table th {
+    background-color: var(--color-filter);
+    color: white;
+    padding: 0.8rem;
+    font-weight: bold;
+}
+
+.todo-table td {
+    background-color: white;
+    padding: 0.7rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.todo-table th:first-child,
+.todo-table td:first-child {
+    width: 3rem;
+}
+
+/*푸터 스타일*/
+footer {
+    width: 100%;
+    padding: 2rem;
+    align-items: center;
+    color: #443627;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    background-color: #BDDDE4;
+    font-size: 1rem;
+    bottom: 0;
+}
+
+.dragging {
+    opacity: 0.5;
+  }
