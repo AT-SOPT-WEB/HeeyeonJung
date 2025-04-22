@@ -90,11 +90,7 @@
     font: inherit;
     vertical-align: baseline;
   }
-  
-  html {
-    font-size: 62.5%;
-  }
-  
+
   /* HTML5 display-role reset for older browsers */
   article,
   aside,
@@ -139,7 +135,6 @@
   }
   button {
     border: 0;
-    background-color: transparent;
     cursor: pointer;
   }
   
