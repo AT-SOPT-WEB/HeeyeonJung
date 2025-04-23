@@ -12,7 +12,7 @@
 </head>
 <body>
   <main>
-    <!-- 팔터 섹션 -->
+    <!-- 필터 섹션 -->
     <section class="title-section">
       <h1>MY TODO LIST</h1>
       <div class="filter-buttons">
@@ -24,11 +24,11 @@
             <span>중요도</span>
             <i class="fa-solid fa-caret-down"></i>
           </button>
-          <div class="dropdown-content" id="priority-dropdown">
-            <a href="#" data-priority="1">1</a>
-            <a href="#" data-priority="2">2</a>
-            <a href="#" data-priority="3">3</a>
-          </div>
+          <ul class="dropdown-content" id="priority-dropdown">
+            <li data-priority="1">1</li>
+            <li data-priority="2">2</li>
+            <li data-priority="3">3</li>
+          </ul>
         </article>
       </div>
     </section>
@@ -37,7 +37,7 @@
     <div id="content-contain">
       <div id="form-wrapper">
         <section class="input-section">
-          <input type="text" id="input-filed" placeholder="할 일을 입력하세요" />
+          <input type="text" id="input-field" placeholder="할 일을 입력하세요" />
           <div class="custom-select" id="priority-select">
             <button id="select-toggle" class="select-btn">
               <span id="selected-priority">중요도 선택</span>
