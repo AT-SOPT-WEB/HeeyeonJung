@@ -7,12 +7,13 @@ main {
 .title-section h1 {
     background-color: var(--color-top);
     padding: 1rem;
-    margin-bottom: 2rem;
+    margin-top: 2.5rem;
+    margin-bottom: 3rem;
     text-align: center;
     color: white;
     font-weight: bold;
     font-size: 2.3rem;
-    border-radius: 0.5rem;
+    border-radius: 0.6rem;
 }
 
 .filter-buttons {
@@ -37,29 +38,53 @@ main {
     color: white;
 }
 
+.filter-buttons button:active,
+#add-btn:active,
+#delete-btn:active,
+#complete-btn:active {
+  background-color: #D5E7B5;
+  color: white;
+}
+
 .dropdown {
     position: relative;
 }
 
-.dropdown-content {
+.dropdown-content,
+.select-dropdown {
+    display: none;
     position: absolute;
-    margin-top: 0.8rem;
+    margin-top: 0.3rem;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
     left: 0;
     display: none;
     flex-direction: column;
-    background-color: white;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
-    border-radius: 0.3rem;
-    padding: 0.5rem 2rem;
+    padding: 0.6rem 0.5rem;
+    z-index: 2;
 }
 
 .dropdown:hover .dropdown-content {
     display: flex;
 }
 
+#priority-dropdown li,
+#select-dropdown li {
+    cursor: pointer;
+    padding: 0.5rem 3rem;
+    border-radius: 0.5rem;
+}
+
+#priority-dropdown li:hover,
+#select-dropdown li:hover {
+    background-color: #f0f0f0;
+}
+
 #content-contain {
     background-color: var(--color-bg);
-    padding: 5rem 3rem;
+    padding: 4rem 3rem;
     margin-bottom: 4.6rem;
     border-radius: 1rem;
 }
@@ -71,14 +96,14 @@ main {
     margin-bottom: 1rem;
 }
 
-#input-filed {
+#input-field {
     flex: 1;
     padding: 0.5rem;
     border: 1px solid #ccc;
     border-radius: 0.5rem;
 }
 
-#input-filed:focus {
+#input-field:focus {
     outline: none;
   }
 
@@ -92,22 +117,6 @@ main {
     border: 1px solid #ccc;
     border-radius: 0.5rem;
     cursor: pointer;
-}
-
-.select-dropdown {
-    display: none;
-    position: absolute;
-    top: 100%;
-    margin-top: 0.3rem;
-    left: 0;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 0.5rem;
-    z-index: 4;
-    left: 0;
-    display: none;
-    flex-direction: column;
-    padding: 0.5rem 2.5rem;
 }
 
 .custom-select:hover .select-dropdown {
@@ -148,10 +157,13 @@ main {
 
 /*푸터 스타일*/
 footer {
+    position: absolute;
+    left: 0;
+    bottom: 0;
     width: 100%;
     padding: 2rem;
     align-items: center;
-    color: #443627;
+    color: white;
     font-weight: bold;
     display: flex;
     justify-content: center;
