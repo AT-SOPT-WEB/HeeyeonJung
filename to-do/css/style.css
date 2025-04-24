@@ -27,7 +27,8 @@ main {
 .filter-buttons button,
 #add-btn,
 #delete-btn,
-#complete-btn {
+#complete-btn,
+#close-modal {
     background-color: var(--color-button);
     padding: 0.6rem;
     border-radius: 0.6rem;
@@ -54,7 +55,7 @@ main {
 .select-dropdown {
     display: none;
     position: absolute;
-    margin-top: 0.3rem;
+    margin-top: 0.2rem;
     left: 0;
     background-color: white;
     border: 1px solid #ccc;
@@ -64,10 +65,6 @@ main {
     flex-direction: column;
     padding: 0.6rem 0.5rem;
     z-index: 2;
-}
-
-.dropdown:hover .dropdown-content {
-    display: flex;
 }
 
 #priority-dropdown li,
@@ -119,10 +116,6 @@ main {
     cursor: pointer;
 }
 
-.custom-select:hover .select-dropdown {
-    display: block;
-}
-
 .action-buttons {
     display: flex;
     gap: 0.5rem;
@@ -155,23 +148,37 @@ main {
     width: 3rem;
 }
 
-/*푸터 스타일*/
-footer {
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    padding: 2rem;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-    display: flex;
-    justify-content: center;
-    background-color: #BDDDE4;
-    font-size: 1rem;
-    bottom: 0;
-}
-
 .dragging {
     opacity: 0.5;
   }
+
+/* 모달 스타일 */
+.modal.hidden {
+    display: none;
+  }
+
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    }
+
+.modal-content {
+    background-color: white;
+    padding: 4rem;
+    border-radius: 0.8rem;
+    text-align: center;
+    font-size: 1.1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+#close-modal {
+    margin-top: 1rem;
+}
+  
