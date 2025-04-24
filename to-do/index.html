@@ -16,11 +16,11 @@
     <section class="title-section">
       <h1>MY TODO LIST</h1>
       <div class="filter-buttons">
-        <button id="filter-all">전체</button>
-        <button id="filter-completed">완료됨</button>
-        <button id="filter-incomplete">미완료</button>
+        <button class="btn filter-btn" id="filter-all">전체</button>
+        <button class="btn filter-btn" id="filter-completed">완료됨</button>
+        <button class="btn filter-btn" id="filter-incomplete">미완료</button>
         <div class="dropdown">
-          <button id="priority-btn">
+          <button class="btn filter-btn" id="priority-btn">
             <span>중요도</span>
             <i class="fa-solid fa-caret-down"></i>
           </button>
@@ -50,12 +50,12 @@
               <li data-priority="3">3</li>
             </ul>
           </div>
-          <button id="add-btn">추가</button>
+          <button class="btn" id="add-btn">추가</button>
         </section>
 
         <section class="action-buttons">
-          <button id="delete-btn">삭제</button>
-          <button id="complete-btn">완료</button>
+          <button class="btn" id="delete-btn">삭제</button>
+          <button class="btn" id="complete-btn">완료</button>
         </section>
       </div>
 
@@ -63,7 +63,7 @@
       <div id="modal" class="modal hidden">
         <div class="modal-content">
           <p>이미 완료된 todo입니다</p>
-          <button id="close-modal">닫기</button>
+          <button class="btn" id="close-modal">닫기</button>
         </div>
       </div>
 

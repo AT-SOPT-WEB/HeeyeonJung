@@ -24,11 +24,7 @@ main {
     margin-bottom: 2rem;
 }
 
-.filter-buttons button,
-#add-btn,
-#delete-btn,
-#complete-btn,
-#close-modal {
+.btn {
     background-color: var(--color-button);
     padding: 0.6rem;
     border-radius: 0.6rem;
@@ -37,14 +33,12 @@ main {
     font-weight: bold;
     text-align: center;
     color: white;
+    cursor: pointer;
 }
 
-.filter-buttons button:active,
-#add-btn:active,
-#delete-btn:active,
-#complete-btn:active {
-  background-color: #D5E7B5;
-  color: white;
+.btn:active {
+    background-color: #D5E7B5;
+    color: white;
 }
 
 .dropdown {
@@ -123,7 +117,6 @@ main {
     justify-content: flex-end;
 }
 
-/* 테이블 스타일 */
 .todo-table table {
     width: 100%;
     border-collapse: collapse;
@@ -152,7 +145,6 @@ main {
     opacity: 0.5;
   }
 
-/* 모달 스타일 */
 .modal.hidden {
     display: none;
   }
