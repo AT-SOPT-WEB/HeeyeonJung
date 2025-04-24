@@ -19,8 +19,8 @@
         <button id="filter-all">전체</button>
         <button id="filter-completed">완료됨</button>
         <button id="filter-incomplete">미완료</button>
-        <article class="dropdown">
-          <button id="priority-toggle" class="dropbtn">
+        <div class="dropdown">
+          <button id="priority-btn">
             <span>중요도</span>
             <i class="fa-solid fa-caret-down"></i>
           </button>
@@ -29,7 +29,8 @@
             <li data-priority="2">2</li>
             <li data-priority="3">3</li>
           </ul>
-        </article>
+        </div>
+        
       </div>
     </section>
 
@@ -58,6 +59,14 @@
         </section>
       </div>
 
+      <!-- 모달-->
+      <div id="modal" class="modal hidden">
+        <div class="modal-content">
+          <p>이미 완료된 todo입니다</p>
+          <button id="close-modal">닫기</button>
+        </div>
+      </div>
+
       <!-- 테이블 -->
       <section class="todo-table">
         <table>
@@ -75,10 +84,5 @@
       </section>
     </div>
   </main>
-
-  <!-- 푸터 -->
-  <footer>
-    <p>© SOPT 2주차 과제 화이팅 할 일을 미루지말자</p>
-  </footer>
 </body>
 </html>
