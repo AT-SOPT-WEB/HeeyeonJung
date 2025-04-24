@@ -2,21 +2,70 @@ import { todos as initialTodos } from './todoData.js';
 
 let todos;
 try {
-  todos = JSON.parse(localStorage.getItem('todos')) || initialTodos;
+  const saved = JSON.parse(localStorage.getItem('todos'));
+  todos = saved && Array.isArray(saved) ? saved : initialTodos;
+
+  if (!saved) {
+    saveTodos(); 
+  }
 } catch (e) {
-  todos = initialTodos; 
+  todos = initialTodos;
+  saveTodos(); 
 }
 
-let currentFilter = 'all';        
-let currentPriority = 'all';      
+let currentFilter = 'all';
+let currentPriority = 'all';
 
 const todoBody = document.getElementById('todo-body');
 const selectAllCheckbox = document.getElementById('select-all');
 const inputField = document.getElementById('input-field');
 const addBtn = document.getElementById('add-btn');
 const selectedPriority = document.getElementById('selected-priority');
+const deleteBtn = document.getElementById('delete-btn');
+const completeBtn = document.getElementById('complete-btn');
+const selectBtn = document.querySelector('.select-btn');
+const selectDropdown = document.querySelector('.select-dropdown');
+const priorityBtn = document.getElementById('priority-btn');
+const priorityDropdown = document.getElementById('priority-dropdown');
+const modal = document.getElementById("modal");
+const closeModalBtn = document.getElementById("close-modal");
 
-// 중요도 필터 선택
+// 상단 버튼 이벤트 처리
+document.getElementById('filter-all').addEventListener('click', () => {
+  currentFilter = 'all';
+  renderTodos();
+});
+document.getElementById('filter-completed').addEventListener('click', () => {
+  currentFilter = 'completed';
+  renderTodos();
+});
+document.getElementById('filter-incomplete').addEventListener('click', () => {
+  currentFilter = 'incomplete';
+  renderTodos();
+});
+
+// 상단 중요도 필터 선택
+document.querySelectorAll('#priority-dropdown li').forEach(link => {
+  link.addEventListener('click', (e) => {
+    e.preventDefault();
+    currentPriority = e.target.dataset.priority;
+    renderTodos();
+  });
+});
+
+priorityBtn.addEventListener('click', (e) => {
+  e.stopPropagation(); 
+  const isOpen = priorityDropdown.style.display === 'block';
+  priorityDropdown.style.display = isOpen ? 'none' : 'block';
+});
+
+document.addEventListener('click', (e) => {
+  if (!priorityBtn.contains(e.target) && !priorityDropdown.contains(e.target)) {
+    priorityDropdown.style.display = 'none';
+  }
+});
+
+// 하단 중요도 필터 선택
 document.querySelectorAll('#select-dropdown li').forEach(item => {
   item.addEventListener('click', () => {
     currentPriority = item.dataset.priority;
@@ -24,7 +73,24 @@ document.querySelectorAll('#select-dropdown li').forEach(item => {
   });
 });
 
-// 로컬 스토리지에 todos 데이터를 저장하는 함수
+selectBtn.addEventListener('click', () => {
+  const isOpen = selectDropdown.style.display === 'block';
+  selectDropdown.style.display = isOpen ? 'none' : 'block';
+});;
+
+document.addEventListener('click', (e) => {
+  if (!selectBtn.contains(e.target) && !selectDropdown.contains(e.target)) {
+    selectDropdown.style.display = 'none';  
+  }
+});
+
+// ID 자동 생성
+function generateNextId() {
+  const maxId = todos.reduce((max, todo) => (todo.id ? Math.max(max, todo.id) : max), 0);
+  return maxId + 1;
+}
+
+// 로컬스토리지 저장
 function saveTodos() {
   localStorage.setItem('todos', JSON.stringify(todos));
 }
@@ -50,13 +116,13 @@ function renderTodos() {
   todoBody.innerHTML = "";
   const filteredTodos = getFilteredTodos();
 
-  filteredTodos.forEach((todo, index) => {
+  filteredTodos.forEach((todo) => {
     const tr = document.createElement("tr");
     tr.setAttribute("draggable", true);
-    tr.dataset.index = index; 
+    tr.dataset.id = todo.id;
 
     tr.innerHTML = `
-      <td><input type="checkbox" class="row-checkbox" data-index="${index}"></td>
+      <td><input type="checkbox" class="row-checkbox" data-id="${todo.id}"></td>
       <td>${todo.priority}</td>
       <td>${todo.completed ? "✅" : "❌"}</td>
       <td>${todo.title}</td>
@@ -67,16 +133,17 @@ function renderTodos() {
 
   updateSelectAllState();
   enableRowCheckboxEvents();
+  enableDragAndDrop();
 }
 
-// 체크박스의 선택 상태에 따라 '전체 선택' 체크박스를 업데이트하는 함수
+// 전체선택 체크박스 업데이트
 function updateSelectAllState() {
   const rowCheckboxes = document.querySelectorAll(".row-checkbox");
   const checkedCount = [...rowCheckboxes].filter(cb => cb.checked).length;
   selectAllCheckbox.checked = checkedCount === rowCheckboxes.length && rowCheckboxes.length > 0;
 }
 
-// 개별 체크박스 이벤트를 활성화하는 함수
+// 개별 체크박스 이벤트
 function enableRowCheckboxEvents() {
   const rowCheckboxes = document.querySelectorAll(".row-checkbox");
   rowCheckboxes.forEach(checkbox => {
@@ -86,99 +153,127 @@ function enableRowCheckboxEvents() {
   });
 }
 
-// '전체 선택' 체크박스 클릭 이벤트
-selectAllCheckbox.addEventListener("change", (e) => {
-  const rowCheckboxes = document.querySelectorAll(".row-checkbox");
-  rowCheckboxes.forEach(cb => {
-    cb.checked = e.target.checked;
-  });
-  updateSelectAllState();
-});
-
-// 드래그 앤 드롭 기능 활성화
-function enableDrag() {
-  let dragged;
-
-  todoBody.addEventListener("dragstart", (e) => {
-    if (e.target.tagName === "TR") {
-      dragged = e.target;
-      e.target.classList.add("dragging");
-    }
-  });
-
-  todoBody.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    const draggingOver = [...todoBody.children].find(
-      el => e.clientY < el.getBoundingClientRect().top + el.offsetHeight / 2
-    );
-    if (draggingOver && draggingOver !== dragged) {
-      todoBody.insertBefore(dragged, draggingOver);
-    } else if (!draggingOver) {
-      todoBody.appendChild(dragged);
-    }
-  });
-
-  todoBody.addEventListener("drop", () => {
-    const newOrder = [...todoBody.children].map(row => {
-      const originalIndex = +row.dataset.index;
-      return todos[originalIndex];
-    });
-    todos = newOrder;
-    saveTodos();
-    renderTodos();
-    enableDrag();
-  });
-
-  todoBody.addEventListener("dragend", (e) => {
-    e.target.classList.remove("dragging");
-  });
-}
-
-// 필터 버튼 이벤트 처리
-document.getElementById('filter-all').addEventListener('click', () => {
-  currentFilter = 'all';
-  renderTodos();
-});
-document.getElementById('filter-completed').addEventListener('click', () => {
-  currentFilter = 'completed';
-  renderTodos();
-});
-document.getElementById('filter-incomplete').addEventListener('click', () => {
-  currentFilter = 'incomplete';
-  renderTodos();
-});
-
-// 중요도 필터 이벤트 처리
-document.querySelectorAll('#priority-dropdown li').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    currentPriority = e.target.dataset.priority;
-    renderTodos();
+// 전체 선택
+selectAllCheckbox.addEventListener("change", () => {
+  const checkboxes = document.querySelectorAll(".row-checkbox");
+  checkboxes.forEach(cb => {
+    cb.checked = selectAllCheckbox.checked;
   });
 });
 
+//추가 버튼
 addBtn.addEventListener("click", () => {
   const title = inputField.value.trim();
+  const priority = selectedPriority.textContent;
 
   if (!title || currentPriority === "all") {
     alert("할 일과 중요도를 입력하세요!");
     return;
   }
-  
+
   const newTodo = {
+    id: generateNextId(),
     title,
     completed: false,
-    priority: Number(currentPriority),
+    priority: Number(priority),
   };
 
   todos.push(newTodo);
   saveTodos();
-  renderTodos();
 
+  currentFilter = 'all';
+  currentPriority = 'all';
+  selectedPriority.textContent = '중요도 선택';
+
+  renderTodos();
   inputField.value = "";
-  selectedPriority.textContent = "all";
-  currentPriority = "all";
 });
 
+// 삭제 버튼
+deleteBtn.addEventListener("click", () => {
+  const checkedIds = [...document.querySelectorAll(".row-checkbox")]
+    .filter(cb => cb.checked)
+    .map(cb => Number(cb.dataset.id));
+
+  if (checkedIds.length === 0) {
+    alert("삭제할 항목을 선택해주세요!");
+    return;
+  }
+
+  todos = todos.filter(todo => !checkedIds.includes(todo.id));
+  saveTodos();
+  renderTodos();
+});
+
+// 완료 버튼
+completeBtn.addEventListener("click", () => {
+  const checkedIds = [...document.querySelectorAll(".row-checkbox")]
+    .filter(cb => cb.checked)
+    .map(cb => Number(cb.dataset.id));
+
+  if (checkedIds.length === 0) {
+    alert("완료할 항목을 선택해주세요!");
+    return;
+  }
+
+  const hasCompleted = checkedIds.some(id => {
+    const todo = todos.find(t => t.id === id);
+    return todo && todo.completed;
+  });
+
+  if (hasCompleted) {
+    showModal("이미 완료된 todo입니다");
+    return;
+  }
+  
+  todos = todos.map(todo =>
+    checkedIds.includes(todo.id) ? { ...todo, completed: true } : todo
+  );
+
+  saveTodos();
+  renderTodos();
+});
+
+// 드래그앤드롭
+let draggedRowId = null;
+
+function enableDragAndDrop() {
+  const rows = document.querySelectorAll("tr[draggable=true]");
+
+  rows.forEach(row => {
+    row.addEventListener("dragstart", () => {
+      draggedRowId = row.dataset.id;
+    });
+
+    row.addEventListener("dragover", e => {
+      e.preventDefault(); 
+    });
+
+    row.addEventListener("drop", () => {
+      const targetId = row.dataset.id;
+      if (draggedRowId === targetId) return;
+
+      const fromIndex = todos.findIndex(todo => String(todo.id) === draggedRowId);
+      const toIndex = todos.findIndex(todo => String(todo.id) === targetId);
+
+      const [movedItem] = todos.splice(fromIndex, 1);
+      todos.splice(toIndex, 0, movedItem);
+
+      saveTodos();
+      renderTodos();
+    });
+  });
+}
+
+// 커스텀 모달
+closeModalBtn.addEventListener("click", () => {
+  modal.classList.add("hidden");
+});
+
+function showModal(message) {
+  modal.querySelector("p").textContent = message;
+  modal.classList.remove("hidden");
+}
+
 renderTodos();
-enableDrag();
+enableDragAndDrop();
