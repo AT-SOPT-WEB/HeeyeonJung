@@ -23,10 +23,6 @@ const addBtn = document.getElementById('add-btn');
 const selectedPriority = document.getElementById('selected-priority');
 const deleteBtn = document.getElementById('delete-btn');
 const completeBtn = document.getElementById('complete-btn');
-const selectBtn = document.querySelector('.select-btn');
-const selectDropdown = document.querySelector('.select-dropdown');
-const priorityBtn = document.getElementById('priority-btn');
-const priorityDropdown = document.getElementById('priority-dropdown');
 const modal = document.getElementById("modal");
 const closeModalBtn = document.getElementById("close-modal");
 
@@ -44,44 +40,47 @@ document.getElementById('filter-incomplete').addEventListener('click', () => {
   renderTodos();
 });
 
-// 상단 중요도 필터 선택
-document.querySelectorAll('#priority-dropdown li').forEach(link => {
-  link.addEventListener('click', (e) => {
-    e.preventDefault();
-    currentPriority = e.target.dataset.priority;
-    renderTodos();
+//상단, 하단 드롭다운 
+function setupDropdown({ btn, dropdown, onSelect, label }) {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = dropdown.style.display === 'block';
+    dropdown.style.display = isOpen ? 'none' : 'block';
   });
-});
 
-priorityBtn.addEventListener('click', (e) => {
-  e.stopPropagation(); 
-  const isOpen = priorityDropdown.style.display === 'block';
-  priorityDropdown.style.display = isOpen ? 'none' : 'block';
-});
+  document.addEventListener('click', (e) => {
+    if (!btn.contains(e.target) && !dropdown.contains(e.target)) {
+      dropdown.style.display = 'none';
+    }
+  });
 
-document.addEventListener('click', (e) => {
-  if (!priorityBtn.contains(e.target) && !priorityDropdown.contains(e.target)) {
-    priorityDropdown.style.display = 'none';
+  dropdown.querySelectorAll('li').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      const value = item.dataset.priority;
+      onSelect(value);
+      if (label) label.textContent = value;
+      dropdown.style.display = 'none';
+    });
+  });
+}
+
+setupDropdown({
+  btn: document.getElementById('priority-btn'),
+  dropdown: document.getElementById('priority-dropdown'),
+  onSelect: (val) => {
+    currentPriority = val;
+    renderTodos(); 
   }
 });
 
-// 하단 중요도 필터 선택
-document.querySelectorAll('#select-dropdown li').forEach(item => {
-  item.addEventListener('click', () => {
-    currentPriority = item.dataset.priority;
-    selectedPriority.textContent = currentPriority;
-  });
-});
-
-selectBtn.addEventListener('click', () => {
-  const isOpen = selectDropdown.style.display === 'block';
-  selectDropdown.style.display = isOpen ? 'none' : 'block';
-});;
-
-document.addEventListener('click', (e) => {
-  if (!selectBtn.contains(e.target) && !selectDropdown.contains(e.target)) {
-    selectDropdown.style.display = 'none';  
-  }
+setupDropdown({
+  btn: document.getElementById('select-toggle'), 
+  dropdown: document.getElementById('select-dropdown'),
+  onSelect: (val) => {
+    currentPriority = val;
+  },
+  label: document.getElementById('selected-priority')
 });
 
 // ID 자동 생성
