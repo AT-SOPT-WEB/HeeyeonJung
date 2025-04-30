@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Header from './components/Header/Header'
-import GithubSearch from './components/GithubSearch/GithubSearch';
+import GithubSearch from './components/GithubUser/GithubSearch';
 import BaseballGame from './components/BaseballGame/BaseballGame';
 
 function App() {
@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       <Header selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-      
+
       <main>
         {selectedTab === 'github' ? <GithubSearch /> : <BaseballGame />}
       </main>
