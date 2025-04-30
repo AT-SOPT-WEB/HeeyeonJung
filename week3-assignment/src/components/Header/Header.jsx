@@ -32,6 +32,7 @@ const HeaderWrapper = styled.header`
   background-color: #f4e1a7;
   background-color: #E1EACD;
   padding: 1.5rem 0;
+  margin-bottom: 4rem;
 `;
 
 const HeaderInner = styled.div`
