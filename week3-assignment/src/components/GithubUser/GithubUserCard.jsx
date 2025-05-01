@@ -1,4 +1,3 @@
-// 깃허브 유저 검색 카드 
 import styled from '@emotion/styled';
 
 function GithubUserCard({ user, onClose }) {
