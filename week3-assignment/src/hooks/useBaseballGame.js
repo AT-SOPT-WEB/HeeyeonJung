@@ -4,7 +4,7 @@ export function useBaseballGame() {
   const [answer, setAnswer] = useState('');
   const [input, setInput] = useState('');
   const [history, setHistory] = useState([]);
-  const [message, setMessage] = useState(''); //메시지 상태 추가
+  const [message, setMessage] = useState('');
 
   useEffect(() => {
     generateAnswer();
@@ -20,7 +20,7 @@ export function useBaseballGame() {
     }
     const newAnswer = digits.join('');
     setAnswer(newAnswer);
-    console.log('정답:', newAnswer); 
+    console.log('정답:', newAnswer);
   };
 
   const handleInputChange = (value) => {
@@ -45,8 +45,10 @@ export function useBaseballGame() {
       }
     }
 
-    const resultText = `${strike} 스트라이크 ${ball} 볼`;
-    setHistory((prev) => [...prev, { guess: input, result: resultText }]);
+    const resultMessage = `${strike} 스트라이크 ${ball} 볼`;
+    const resultSummary = `${strike}S ${ball}B`;
+
+    setHistory((prev) => [...prev, { guess: input, result: resultSummary }]);
     setInput('');
 
     if (strike === 3) {
@@ -57,7 +59,7 @@ export function useBaseballGame() {
         setMessage('');
       }, 3000);
     } else {
-      setMessage(resultText); 
+      setMessage(resultMessage);
     }
   };
 
