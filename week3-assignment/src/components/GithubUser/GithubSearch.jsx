@@ -1,19 +1,34 @@
-// 깃허브 유저 검색 로직
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useGithubUserInfo } from '../../hooks/useGithubUserInfo';
 import StyledInput from '../common/StyledInput';
 import GithubUserCard from './GithubUserCard';
 import ClipLoader from 'react-spinners/ClipLoader';
+import RecentSearches from './RecentSearches';
 
 function GithubSearch() {
   const [input, setInput] = useState('');
+  const [recentSearches, setRecentSearches] = useState(() => {
+    const saved = localStorage.getItem('recentSearches');
+    return saved ? JSON.parse(saved) : [];
+  });
+
   const { userInfo, getUserInfo } = useGithubUserInfo();
 
-  const handleSearch = () => {
-    if (input.trim()) {
-      getUserInfo(input.trim());
-    }
+  const handleSearch = (keyword = input.trim()) => {
+    if (!keyword) return;
+
+    getUserInfo(keyword);
+
+    const updated = [keyword, ...recentSearches.filter(item => item !== keyword)].slice(0, 3);
+    setRecentSearches(updated);
+    localStorage.setItem('recentSearches', JSON.stringify(updated));
+  };
+
+  const handleDelete = (keyword) => {
+    const updated = recentSearches.filter(item => item !== keyword);
+    setRecentSearches(updated);
+    localStorage.setItem('recentSearches', JSON.stringify(updated));
   };
 
   return (
@@ -22,7 +37,7 @@ function GithubSearch() {
         value={input}
         onChange={(e) => setInput(e.target.value)}
         onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
-        placeholder="깃허브 아이디를 입력하세요"
+        placeholder="Github 프로필을 검색해보세요."
       />
 
       {userInfo.status === 'pending' && (
@@ -31,7 +46,15 @@ function GithubSearch() {
         </SpinnerWrapper>
       )}
 
-      {userInfo.status === 'rejected' && <ErrorText>사용자를 찾을 수 없습니다. 다시 시도해주세요.</ErrorText>}
+      <RecentSearches
+        items={[...recentSearches].reverse()}
+        onClickKeyword={handleSearch}
+        onDeleteKeyword={handleDelete}
+      />
+
+      {userInfo.status === 'rejected' && (
+        <ErrorText>사용자를 찾을 수 없습니다. 다시 시도해주세요.</ErrorText>
+      )}
 
       {userInfo.status === 'resolved' && userInfo.data && (
         <GithubUserCard user={userInfo.data} onClose={() => getUserInfo('')} />
