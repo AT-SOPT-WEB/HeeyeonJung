@@ -16,10 +16,6 @@ const StyledInput = styled.input`
     color: #a89b84;                   
     font-weight: 500;
   }
-
-  &:focus {           
-    background-color: #fffdf3;         
-  }
 `;
 
 export default StyledInput;
