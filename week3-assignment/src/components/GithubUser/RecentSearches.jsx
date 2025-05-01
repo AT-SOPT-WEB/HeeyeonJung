@@ -1,4 +1,3 @@
-//깃허브 유저 최근 검색
 import styled from '@emotion/styled';
 
 function RecentSearches({ items, onClickKeyword, onDeleteKeyword }) {
@@ -45,7 +44,7 @@ const KeywordList = styled.div`
 `;
 
 const Keyword = styled.div`
-  background-color: #fefae0;
+  background-color: #EED3D9;
   border: 1px solid #e6ccb2;
   border-radius: 1rem;
   padding: 0.3rem 1rem;
