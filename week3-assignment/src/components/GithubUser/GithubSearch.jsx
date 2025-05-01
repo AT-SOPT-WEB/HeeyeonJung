@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
 import { useGithubUserInfo } from '../../hooks/useGithubUserInfo';
+import { useRecentSearches } from '../../hooks/useRecentSearches';
 import StyledInput from '../common/StyledInput';
 import GithubUserCard from './GithubUserCard';
 import ClipLoader from 'react-spinners/ClipLoader';
@@ -8,35 +9,15 @@ import RecentSearches from './RecentSearches';
 
 function GithubSearch() {
   const [input, setInput] = useState('');
-  const [recentSearches, setRecentSearches] = useState(() => {
-    const saved = localStorage.getItem('recentSearches');
-    return saved ? JSON.parse(saved) : [];
-  });
-
   const { userInfo, getUserInfo } = useGithubUserInfo();
-
-  const handleSearch = (keyword = input.trim()) => {
-    if (!keyword) return;
-
-    getUserInfo(keyword);
-
-    const updated = [keyword, ...recentSearches.filter(item => item !== keyword)].slice(0, 3);
-    setRecentSearches(updated);
-    localStorage.setItem('recentSearches', JSON.stringify(updated));
-  };
-
-  const handleDelete = (keyword) => {
-    const updated = recentSearches.filter(item => item !== keyword);
-    setRecentSearches(updated);
-    localStorage.setItem('recentSearches', JSON.stringify(updated));
-  };
+  const { recentSearches, handleSearch, handleDelete } = useRecentSearches(getUserInfo);
 
   return (
     <Container>
       <StyledInput
         value={input}
         onChange={(e) => setInput(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && handleSearch()}
+        onKeyDown={(e) => e.key === 'Enter' && handleSearch(input.trim())}
         placeholder="Github 프로필을 검색해보세요."
       />
 
@@ -48,7 +29,7 @@ function GithubSearch() {
 
       <RecentSearches
         items={[...recentSearches].reverse()}
-        onClickKeyword={handleSearch}
+        onClickKeyword={(keyword) => handleSearch(keyword)}
         onDeleteKeyword={handleDelete}
       />
 
