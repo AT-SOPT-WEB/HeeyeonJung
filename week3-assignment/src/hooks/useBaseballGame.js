@@ -24,10 +24,10 @@ export function useBaseballGame() {
   };
 
   const resetGame = () => {
-    setInput('');
-    setHistory([]);
-    setMessage('');
     generateAnswer();
+    setHistory([]);
+    setInput('');
+    setMessage('');
   };
 
   const handleInputChange = (value) => {
@@ -40,6 +40,8 @@ export function useBaseballGame() {
       setMessage('⚠️ 서로 다른 숫자 3자리를 입력해주세요!');
       return;
     }
+
+    if (history.length >= 10) return;
 
     let strike = 0;
     let ball = 0;
