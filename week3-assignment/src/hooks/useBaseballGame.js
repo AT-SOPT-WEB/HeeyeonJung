@@ -23,6 +23,13 @@ export function useBaseballGame() {
     console.log('정답:', newAnswer);
   };
 
+  const resetGame = () => {
+    setInput('');
+    setHistory([]);
+    setMessage('');
+    generateAnswer();
+  };
+
   const handleInputChange = (value) => {
     const onlyNumbers = value.replace(/[^0-9]/g, '');
     setInput(onlyNumbers);
@@ -45,21 +52,21 @@ export function useBaseballGame() {
       }
     }
 
-    const resultMessage = `${strike} 스트라이크 ${ball} 볼`;
-    const resultSummary = `${strike}S ${ball}B`;
+    const resultText = `${strike} 스트라이크 ${ball} 볼`;
+    const shortResult = `${strike}S ${ball}B`;
 
-    setHistory((prev) => [...prev, { guess: input, result: resultSummary }]);
+    const updatedHistory = [...history, { guess: input, result: shortResult }];
+    setHistory(updatedHistory);
     setInput('');
 
     if (strike === 3) {
       setMessage('🎉 정답입니다! 3초 뒤에 게임이 리셋됩니다.');
-      setTimeout(() => {
-        generateAnswer();
-        setHistory([]);
-        setMessage('');
-      }, 3000);
+      setTimeout(resetGame, 3000);
+    } else if (updatedHistory.length >= 10) {
+      setMessage('💥 게임 오버! 10번을 넘겨서 실패하였습니다. 게임이 초기화됩니다.');
+      setTimeout(resetGame, 5000);
     } else {
-      setMessage(resultMessage);
+      setMessage(resultText);
     }
   };
 
