@@ -3,22 +3,29 @@ import styled from '@emotion/styled';
 function RecentSearches({ items, onClickKeyword, onDeleteKeyword }) {
     return (
       <Wrapper>
-        <Title>최근 검색어</Title>
-        <KeywordList>
-          {items.map((item) => (
-            <Keyword key={item} onClick={() => onClickKeyword(item)}>
-              {item}
-              <DeleteBtn onClick={(e) => {
-                e.stopPropagation();
-                onDeleteKeyword(item);
-              }}>×</DeleteBtn>
-            </Keyword>
-          ))}
-        </KeywordList>
+        {items.length > 0 && (
+          <>
+            <Title>최근 검색어</Title>
+            <KeywordList>
+              {items.map((item) => (
+                <Keyword key={item} onClick={() => onClickKeyword(item)}>
+                  {item}
+                  <DeleteBtn
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDeleteKeyword(item);
+                    }}
+                  >
+                    ×
+                  </DeleteBtn>
+                </Keyword>
+              ))}
+            </KeywordList>
+          </>
+        )}
       </Wrapper>
     );
-  }
-  
+  }  
 
 export default RecentSearches;
 
