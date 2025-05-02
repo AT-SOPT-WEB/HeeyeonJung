@@ -3,18 +3,15 @@ import styled from '@emotion/styled';
 function GithubUserCard({ user, onClose }) {
   return (
     <Card>
-      <CloseButton onClick={onClose}>×</CloseButton>
-
-      <a href={user.html_url} target="_blank" rel="noreferrer">
-        <Avatar src={user.avatar_url} alt="avatar" />
-      </a>
-
-      <a href={user.html_url} target="_blank" rel="noreferrer">
+      <CloseButton onClick={onClose}>×</CloseButton>    
+      <CardContent>
+        <a href={user.html_url} target="_blank" rel="noreferrer">
+          <Avatar src={user.avatar_url} alt="avatar" />
           <UserName>{user.name}</UserName>
-      </a>
-      <UserIdBio>{user.login}</UserIdBio>
-      <UserIdBio>{user.bio}</UserIdBio>
-
+          <UserIdBio>{user.login}</UserIdBio>
+        </a>
+        <UserIdBio>{user.bio}</UserIdBio>
+      </CardContent>
       <StatBoxWrapper>
         <StatBox>
           <span>Followers</span>
@@ -42,6 +39,10 @@ const Card = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const CardContent = styled.div`
+  text-align: center;
 `;
 
 const CloseButton = styled.button`
