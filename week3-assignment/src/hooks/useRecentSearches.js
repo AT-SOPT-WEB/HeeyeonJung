@@ -9,11 +9,19 @@ export function useRecentSearches(getUserInfo) {
   const handleSearch = (keyword) => {
     if (!keyword) return;
 
-    getUserInfo(keyword);
+    const normalized = keyword.trim().toLowerCase();
 
-    const updated = [keyword, ...recentSearches.filter(item => item !== keyword)].slice(0, 3);
+    const isDuplicate = recentSearches.some(item => item.toLowerCase() === normalized);
+    if (isDuplicate) {
+      getUserInfo(normalized);
+      return;
+    }
+
+    const updated = [normalized, ...recentSearches].slice(0, 3);
     setRecentSearches(updated);
     localStorage.setItem('recentSearches', JSON.stringify(updated));
+
+    getUserInfo(normalized);
   };
 
   const handleDelete = (keyword) => {
