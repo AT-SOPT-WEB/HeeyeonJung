@@ -17,7 +17,8 @@ function AttemptList({ history }) {
 export default AttemptList;
 
 const ListWrapper = styled.div`
-  margin-top: 2rem;
+  margin-top: 1rem;
+  margin-bottom: 3.2rem;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
