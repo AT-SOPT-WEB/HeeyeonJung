@@ -1,0 +1,174 @@
+main {
+    max-width: 65%;
+    margin: 2rem auto;
+    padding: 1rem;
+}
+
+.title-section h1 {
+    background-color: var(--color-top);
+    padding: 1rem;
+    margin-top: 2.5rem;
+    margin-bottom: 3rem;
+    text-align: center;
+    color: white;
+    font-weight: bold;
+    font-size: 2.3rem;
+    border-radius: 0.6rem;
+}
+
+.filter-buttons {
+    display: flex;
+    gap: 0.9rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.btn {
+    background-color: var(--color-button);
+    padding: 0.6rem;
+    border-radius: 0.6rem;
+    width: 4.5rem;
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+
+.btn:active {
+    background-color: #D5E7B5;
+    color: white;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content,
+.select-dropdown {
+    display: none;
+    position: absolute;
+    margin-top: 0.2rem;
+    left: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    flex-direction: column;
+    padding: 0.6rem 0.5rem;
+    z-index: 2;
+}
+
+#priority-dropdown li,
+#select-dropdown li {
+    cursor: pointer;
+    padding: 0.5rem 3rem;
+    border-radius: 0.5rem;
+}
+
+#priority-dropdown li:hover,
+#select-dropdown li:hover {
+    background-color: #f0f0f0;
+}
+
+#content-contain {
+    background-color: var(--color-bg);
+    padding: 4rem 3rem;
+    margin-bottom: 4.6rem;
+    border-radius: 1rem;
+}
+
+.input-section {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+#input-field {
+    flex: 1;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+}
+
+#input-field:focus {
+    outline: none;
+  }
+
+.custom-select {
+    position: relative;
+}
+
+.select-btn {
+    padding: 0.5rem;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+    margin: 1rem 0.5rem;
+    justify-content: flex-end;
+}
+
+.todo-table table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+.todo-table th {
+    background-color: var(--color-filter);
+    color: white;
+    padding: 0.8rem;
+    font-weight: bold;
+}
+
+.todo-table td {
+    background-color: white;
+    padding: 0.7rem;
+    border-bottom: 1px solid #ccc;
+}
+
+.todo-table th:first-child,
+.todo-table td:first-child {
+    width: 3rem;
+}
+
+.dragging {
+    opacity: 0.5;
+  }
+
+.modal.hidden {
+    display: none;
+  }
+
+.modal {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 5;
+    }
+
+.modal-content {
+    background-color: white;
+    padding: 3rem;
+    border-radius: 0.8rem;
+    text-align: center;
+    font-size: 1.1rem;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+#close-modal {
+    margin-top: 1rem;
+}
+  

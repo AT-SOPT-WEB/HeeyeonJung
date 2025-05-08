@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>todo</title>
+  <link rel="stylesheet" href="./css/reset.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <link rel="stylesheet" href="./css/theme.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script type="module" src="js/script.js"></script>
+</head>
+<body>
+  <main>
+    <!-- 필터 섹션 -->
+    <section class="title-section">
+      <h1>MY TODO LIST</h1>
+      <div class="filter-buttons">
+        <button class="btn filter-btn" id="filter-all">전체</button>
+        <button class="btn filter-btn" id="filter-completed">완료됨</button>
+        <button class="btn filter-btn" id="filter-incomplete">미완료</button>
+        <div class="dropdown">
+          <button class="btn filter-btn" id="priority-btn">
+            <span>중요도</span>
+            <i class="fa-solid fa-caret-down"></i>
+          </button>
+          <ul class="dropdown-content" id="priority-dropdown">
+            <li data-priority="1">1</li>
+            <li data-priority="2">2</li>
+            <li data-priority="3">3</li>
+          </ul>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- 입력 영역 -->
+    <div id="content-contain">
+      <div id="form-wrapper">
+        <section class="input-section">
+          <input type="text" id="input-field" placeholder="할 일을 입력하세요" />
+          <div class="custom-select" id="priority-select">
+            <button id="select-toggle" class="select-btn">
+              <span id="selected-priority">중요도 선택</span>
+              <i class="fa-solid fa-caret-down"></i>
+            </button>
+            <ul class="select-dropdown" id="select-dropdown">
+              <li data-priority="1">1</li>
+              <li data-priority="2">2</li>
+              <li data-priority="3">3</li>
+            </ul>
+          </div>
+          <button class="btn" id="add-btn">추가</button>
+        </section>
+
+        <section class="action-buttons">
+          <button class="btn" id="delete-btn">삭제</button>
+          <button class="btn" id="complete-btn">완료</button>
+        </section>
+      </div>
+
+      <!-- 모달-->
+      <div id="modal" class="modal hidden">
+        <div class="modal-content">
+          <p>이미 완료된 todo입니다</p>
+          <button class="btn" id="close-modal">닫기</button>
+        </div>
+      </div>
+
+      <!-- 테이블 -->
+      <section class="todo-table">
+        <table>
+          <thead>
+            <tr>
+              <th><input type="checkbox" id="select-all" /></th>
+              <th>중요도</th>
+              <th>완료됨</th>
+              <th>할 일</th>
+            </tr>
+          </thead>
+          <tbody id="todo-body">
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+</body>
+</html>
