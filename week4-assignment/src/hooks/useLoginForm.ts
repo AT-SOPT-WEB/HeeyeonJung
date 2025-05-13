@@ -18,7 +18,9 @@ export const useLoginForm = () => {
       const res = await login(userId, password);
       const token = res.token || res.accessToken || res.userId;
 
-      localStorage.setItem('userToken', token);
+      localStorage.setItem('userToken', token); 
+      localStorage.setItem('userId', userId);   
+
       navigate('/mypage/info');
     } catch (error) {
       const err = error as AxiosError<{ message: string }>; 
