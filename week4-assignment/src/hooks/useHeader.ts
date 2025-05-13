@@ -5,9 +5,18 @@ export const useHeader = () => {
   const navigate = useNavigate();
   const [nickname, setNickname] = useState<string | null>(null);
 
+  const syncNickname = () => {
+    const stored = localStorage.getItem('nickname');
+    setNickname(stored);
+  };
+
   useEffect(() => {
-    const savedNickname = localStorage.getItem('nickname');
-    setNickname(savedNickname);
+    syncNickname();
+
+    window.addEventListener('nicknameUpdated', syncNickname);
+    return () => {
+      window.removeEventListener('nicknameUpdated', syncNickname);
+    };
   }, []);
 
   const handleLogout = () => {
@@ -17,9 +26,13 @@ export const useHeader = () => {
     navigate('/login');
   };
 
+  const goTo = (path: string) => {
+    navigate(path);
+  };
+
   return {
     nickname,
     handleLogout,
-    navigate,
+    goTo,
   };
 };
