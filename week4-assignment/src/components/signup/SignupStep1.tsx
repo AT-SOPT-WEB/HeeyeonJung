@@ -16,7 +16,10 @@ const SignupStep1 = ({ userId, onChange, onNext }: Props) => {
         value={userId}
         onChange={(e) => onChange(e.target.value)}
       />
-      <Button text="다음" onClick={onNext} disabled={!userId} />
+      {userId.length > 20 && (
+          <p className="text-red-500 text-sm mb-1">최대 길이는 20자 이하로 입력해주세요.</p>
+       )}
+      <Button text="다음" onClick={onNext} disabled={!userId || userId.length > 20}  />
     </>
   );
 };
