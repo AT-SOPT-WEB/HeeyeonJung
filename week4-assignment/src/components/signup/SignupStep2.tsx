@@ -33,7 +33,7 @@ const SignupStep2 = ({ password, confirmPassword, onChange, onNext }: Props) => 
        )}
       <Button 
         text="다음" 
-       onClick={onNext} 
+        onClick={onNext} 
         disabled={!password || !confirmPassword || password !== confirmPassword || password.length > 20} />
       </>
   );
