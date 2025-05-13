@@ -19,7 +19,8 @@ export const useLoginForm = () => {
       const token = res.token || res.accessToken || res.userId;
 
       localStorage.setItem('userToken', token); 
-      localStorage.setItem('userId', userId);   
+      localStorage.setItem('userId', userId);  
+      window.dispatchEvent(new Event('nicknameUpdated'));
 
       navigate('/mypage/info');
     } catch (error) {
